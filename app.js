@@ -9,10 +9,12 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var db = require('./models/db');
-var log = require('./models/log');
 var domain = require('domain');
+var log = require('./logHelper');
+var logDB = require('./models/log');
 
 var app = express();
+log.use(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, ''));
@@ -24,7 +26,20 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'app')));
+// app.use(express.static(path.join(__dirname, 'app')));
+
+app.use(function(req, res, next) {
+  var reqDomain = domain.create();
+  reqDomain.on('error', function(error) {
+    logDB.create({
+      url: req.originalUrl,
+      req: req.body,
+      err: error.stack
+    });
+    res.status(500).send(error.stack);
+  });
+  reqDomain.run(next);
+});
 
 app.use(session({
   secret: 'elevenlibrary',
@@ -51,27 +66,6 @@ app.use(function(req, res, next) {
   } else {
     next();
   }
-});
-
-app.use(function(req, res, next) {
-  var views = req.session.views;
-  console.log('session:', req.session);
-  next();
-});
-
-app.use(function(req, res, next) {
-  var reqDomain = domain.create();
-  reqDomain.on('error', function(error) {
-    log.create({
-      url: req.originalUrl,
-      req: req.body,
-      err: error.stack
-    });
-    fs.appendFile('log.log', Date() + ' | ' + req.originalUrl + ' | ' + JSON.stringify(req.body) + ' | ' + error.stack + '\n');
-    console.log("Error req:", req.originalUrl, req.body, error.stack);
-    res.status(500).send(error.stack);
-  });
-  reqDomain.run(next);
 });
 
 require('./routes/admin/books')(app);
