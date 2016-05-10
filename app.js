@@ -55,7 +55,7 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-  var allowedOrigins = ['http://localhost', 'http://9.112.24.133'];
+  var allowedOrigins = ['http://localhost', 'http://9.115.24.133'];
   var origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
