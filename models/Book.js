@@ -13,10 +13,17 @@ var BookSchema = new mongoose.Schema({
   count: Number,
 
   status: Number, //0-free,1-reserved,2-borrowed
+  confirmed: Boolean,
   intrID: String,
   applyTime: Date,
   borrowTime: Date,
   returnTime: Date,
+
+  ownerIntrID: String,
+  ownerName: String,
+  ownerImage: String,
+  ownerPhoneNum: String,
+
 
   likes: [String], // Likes
   rates: [{ intrID: String, value: Number }], // Rates

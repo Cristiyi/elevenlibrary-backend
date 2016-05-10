@@ -91,6 +91,127 @@ module.exports = function(app) {
     });
   });
 
+  // add one book
+  app.post('/api/user/books', filter.authorize, function(req, res) {
+    var book = req.body;
+    book.status = 0;
+
+    Book.create(book, function(err, newBook) {
+      if (err) {
+        console.log('[Add a book]DB insert book err : ' + err);
+        throw err;
+      } else {
+        console.log('[Add a book]DB insert book Success');
+        res.status(200).send({
+          errType: 0,
+          _id: newBook._id
+        });
+      }
+    });
+  });
+
+  //edit one book
+  app.put('/api/user/books/:_id', filter.authorize, function(req, res) {
+    var mdfBook = req.body;
+    var _id = req.params._id;
+
+    Book.update({ _id: _id }, mdfBook, function(err, newBook) {
+      if (err) {
+        console.log('[update bookprop info]update book info err : ' + err);
+        throw err;
+        res.send(err);
+      } else {
+        console.log('[update book info]update book Successfull');
+        res.json({
+          'errType': 0
+        });
+      }
+    });
+  });
+
+  //delete one book
+  app.delete('/api/user/books/:_id', filter.authorize, function(req, res) {
+    var _id = req.params._id;
+
+    Book.remove({ _id: _id }, function(err, newBook) {
+      if (err) {
+        console.log('[update bookprop info]update book info err : ' + err);
+        throw err;
+        res.send(err);
+      } else {
+        console.log('[update book info]update book Successfull');
+        res.json({
+          'errType': 0
+        });
+      }
+    });
+  });
+
+  // deliver one book
+  app.post('/api/user/books/deliver/:_id', filter.authorize, function(req, res) {
+    var _id = req.params._id;
+
+    Book.findOne({
+      _id: _id
+    }, function(err, resbook) {
+      if (err) {
+        console.log('[Borrow a book] Find the reserved book DB err : ' + err);
+      } else if (getExpireTime(resbook.applyTime, 2) < new Date()) {
+        console.log('[Borrow a book] The book has expired');
+      } else {
+        var bTime = new Date();
+        var rTime = getExpireTime(bTime, 30);
+        Book.update({
+          _id: _id
+        }, {
+          status: 2,
+          borrowTime: bTime,
+          returnTime: rTime,
+        }, function(err, bBook) {
+          if (err) {
+            console.log(err);
+            res.json({
+              errType: 1,
+            });
+          } else {
+            res.json({
+              errType: 0,
+              borrowTime: bTime,
+              returnTime: rTime
+            });
+          }
+        });
+      }
+    });
+  });
+
+  //return one book
+  app.post('/api/user/books/return/:_id', filter.authorize, function(req, res) {
+    var _id = req.params._id;
+    Book.findOneAndUpdate({
+      _id: _id
+    }, {
+      status: 0,
+      $unset: {
+        intrID: '',
+        applyTime: null,
+        borrowTime: null,
+        returnTime: null
+      }
+    }, function(err, resbook) {
+      if (err) {
+        console.log('[Return a book] Upate book status and time DB err : ' + err);
+        res.json({
+          errType: 1
+        });
+      } else {
+        res.json({
+          errType: 0
+        });
+      }
+    });
+  });
+
   // Likes, Rates and Comments
   app.put('/api/user/books/like/:_id', filter.authorize, function(req, res) {
     var _id = req.params._id;
@@ -232,6 +353,7 @@ module.exports = function(app) {
         var simBooks = [];
         Book.find({
           category: category,
+          confirmed: true,
           _id: {
             $ne: _id
           },
@@ -251,12 +373,9 @@ module.exports = function(app) {
   });
 
   function getExpireTime(now, num) {
-    // now.setFullYear();
-    // now.setDate(now.getDate()+num);
     var expTime = new Date();
     expTime.setDate(now.getDate() + num);
     return expTime;
   };
-
 
 };
