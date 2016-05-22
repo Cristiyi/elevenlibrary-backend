@@ -1,12 +1,18 @@
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 // create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport();
+var tranOption = {
+  host: 'localhost',
+  port: 25
+};
+
+var transporter = nodemailer.createTransport(smtpTransport(option));
 
 // setup e-mail data with unicode symbols
 var mailOptions = {
-    from: 'Elevenlibrary Admin', // sender address
-    to: 'dlzhjj@cn.ibm.com, suniya.zjj@outlook.com', // list of receivers
+    from: '"Elevenlibrary Admin" <root@oc8301667465.ibm.com>', // sender address
+    to: 'dlzhjj@cn.ibm.com', // list of receivers
     subject: 'Hello ✔', // Subject line
     text: 'Hello world 🐴', // plaintext body
     html: '<b>Hello world 🐴</b>' // html body
