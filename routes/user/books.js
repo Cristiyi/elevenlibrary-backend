@@ -107,7 +107,7 @@ module.exports = function(app) {
         throw err;
       } else {
         console.log('[Add a book]DB insert book Success');
-        res.status(200).send({
+        res.json({
           errType: 0,
           _id: newBook._id
         });

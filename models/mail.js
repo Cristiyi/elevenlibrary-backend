@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
-exports.admin = 'dlzhjj@cn.ibm.com';
+exports.admin = 'lzishuo@cn.ibm.com';
 exports.eleUrl = 'http://9.115.24.133/elevenlibrary-dev/#/';
 
 // send mail with defined transport object
