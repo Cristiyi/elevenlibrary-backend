@@ -71,7 +71,7 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
-        Mail.sendEmail('dlzhjj@cn.ibm.com', '[Elevenlibrary]Admin modified the book :' + mdfBook.name, 'Your book ' + mdfBook.name + ' has been deleted by adminstrator. ', 'http://localhost/project/elevenlibrary-frontend/#/manage/books');
+        Mail.sendEmail('liuyibin@cn.ibm.com,dlzhjj@cn.ibm.com', '[Elevenlibrary]Admin modified the book ' + mdfBook.name, 'Your book ' + mdfBook.name + ' has been deleted by adminstrator. ', 'http://localhost/project/elevenlibrary-frontend/#/manage/books');
       }
     });
   });
