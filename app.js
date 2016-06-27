@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+require('dotenv').config({silent: true});
+
 
 var db = require('./models/db');
 var domain = require('domain');

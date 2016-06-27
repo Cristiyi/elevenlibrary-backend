@@ -68,8 +68,7 @@ module.exports = function(app) {
                   res.send({
                     errType: 0,
                     name: result.userName,
-                    phoneNum: phoneNum,
-                    image: 'https://w3-connectionsapi.ibm.com/profiles/photo.do?email=' + intrID,
+                    phoneNum: phoneNum
                   });
                 });
               } else {
@@ -79,8 +78,7 @@ module.exports = function(app) {
                   res.send({
                     errType: 0,
                     name: result.userName,
-                    phoneNum: phoneNum,
-                    image: 'https://w3-connectionsapi.ibm.com/profiles/photo.do?email=' + intrID,
+                    phoneNum: phoneNum
                   });
                 });
               };

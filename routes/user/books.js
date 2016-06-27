@@ -212,7 +212,7 @@ module.exports = function(app) {
     });
   });
 
-  // Likes, Rates and Comments
+  // Likes
   app.put('/api/user/books/like/:_id', filter.authorize, function(req, res) {
     var _id = req.params._id;
     var intrID = req.body.intrID;
@@ -248,6 +248,7 @@ module.exports = function(app) {
     };
   });
 
+  // Rates
   app.put('/api/user/books/rate/:_id', filter.authorize, function(req, res) {
     var _id = req.params._id;
     var intrID = req.body.intrID;
@@ -270,6 +271,7 @@ module.exports = function(app) {
     })
   });
 
+  // Comments
   app.put('/api/user/books/comment/:_id', filter.authorize, function(req, res) {
     var _id = req.params._id;
     var intrID = req.body.intrID;
@@ -303,6 +305,7 @@ module.exports = function(app) {
     })
   });
 
+  // delete comments
   app.delete('/api/user/books/comment/', filter.authorize, function(req, res) {
     var _id = req.query._id;
     var commentID = req.query.commentID;

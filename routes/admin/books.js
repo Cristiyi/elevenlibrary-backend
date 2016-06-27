@@ -1,6 +1,7 @@
 var Book = require('../../models/Book.js');
 var filter = require('../../models/Filter.js');
 var logger = require("../../logHelper").helper;
+var Mail = require('../../models/mail.js');
 
 module.exports = function(app) {
   // get all books
@@ -70,6 +71,7 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
+        Mail.sendEmail('dlzhjj@cn.ibm.com', '[Elevenlibrary]Admin modified the book :' + mdfBook.name, 'Welcome to ElevenLibrary. \nYour book ' + mdfBook.name + ' has been deleted by adminstrator. \nURL: http://localhost/project/elevenlibrary-frontend/#/manage/books .');
       }
     });
   });
