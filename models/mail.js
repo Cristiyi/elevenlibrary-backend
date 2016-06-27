@@ -1,6 +1,8 @@
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
+exports.admin = 'dlzhjj@cn.ibm.com';
+exports.eleUrl = 'http://9.115.24.133/elevenlibrary-dev/#/';
 
 // send mail with defined transport object
 exports.sendEmail = function(to, subject, text, url) {
@@ -15,10 +17,12 @@ exports.sendEmail = function(to, subject, text, url) {
     to: 'dlzhjj@cn.ibm.com', // list of receivers
     subject: 'Hello ✔', // Subject line
     text: '', // plaintext body
-    html: '<!DOCTYPE html><html><head><title>Your test unsubscribe was successful</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="robots" content="noindex" /><style>  body {    font-family: Arial, Helvetica, sans-serif;  }</style></head><body><h2>'+subject+'</h2><h3>Welcome to ElevenLibrary.</h3><p>'+text+'</p><p>You can click <a href="'+url+'"" target="_blank">here</a> to access.</p><h4>Do not reply: This note has been sent from a service machine.</h4></body></html>' // html body
+    html: '<!DOCTYPE html><html><head><title>Your test unsubscribe was successful</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="robots" content="noindex" /><style>  body {    font-family: Arial, Helvetica, sans-serif;  }</style></head><body><h2>'+subject+'</h2><h3>Welcome to ElevenLibrary.</h3><p>'+text+'</p><p>You can click <a href="'+exports.eleUrl + url+'"" target="_blank">here</a> to access.</p><h4>Do not reply: This note has been sent from a service machine.</h4></body></html>' // html body
   };
   console.log(to, subject, text, url);
-  mailOptions.to = to;
+  if (to) {
+    mailOptions.to = to;
+  };
   mailOptions.subject = subject;
   var transporter = nodemailer.createTransport(smtpTransport(tranOption));
   transporter.sendMail(mailOptions, function(error, info) {

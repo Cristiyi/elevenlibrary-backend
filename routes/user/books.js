@@ -2,6 +2,7 @@ var Book = require('../../models/Book.js');
 var filter = require('../../models/Filter.js');
 
 module.exports = function(app) {
+  // User get all books
   app.get('/api/user/books', function(req, res) {
     Book.find(function(err, books) {
       if (err) {
@@ -55,6 +56,8 @@ module.exports = function(app) {
                   errType: 0,
                   applyTime: applyTime
                 });
+                Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been borrowed by '+intrID, 'Your book '  + book.name + ' has been borrowed by '+intrID+', please click on the Deliver button when the user comes to take the book.', 'book/'+book._id);
+                Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book '+ book.name +' successfully', 'You have reserved the book '+book.name+' successfully, please come to the owner to take the book within two days, or the request will be cancelled automatically.', 'book/'+book._id);
               }
             });
           }
@@ -81,12 +84,14 @@ module.exports = function(app) {
     }, function(err, book) {
       if (err) {
         req.send({
-          errType: 0
+          errType: 1
         });
       } else {
         res.send({
           errType: 0
         });
+        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User '+intrID+' has cancelled the request for the book '+book.name, 'User '+intrID+' has cancelled the request for the book '+book.name, 'book/'+book._id);
+        Mail.sendEmail(intrID, '[Elevenlibrary]You have cancelled the request for book '+ book.name +' successfully', 'You have cancelled the request for book '+ book.name +' successfully.', 'book/'+book._id);
       };
     });
   });
@@ -106,6 +111,7 @@ module.exports = function(app) {
           errType: 0,
           _id: newBook._id
         });
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book '+newBook.name+' has been uploaded by '+ newBook.ownerIntrID+', please confirm and approve the request.', 'book/'+book._id);
       }
     });
   });
@@ -125,6 +131,7 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID, 'The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID +', please confirm and approve the request.', 'book/'+book._id);
       }
     });
   });
@@ -179,6 +186,8 @@ module.exports = function(app) {
               borrowTime: bTime,
               returnTime: rTime
             });
+            Mail.sendEmail(bBook.ownerIntrID, '[Elevenlibrary]Your book '  + bBook.name + ' has been deliverd to '+ intrID +'successfully', 'Your book '  + bBook.name + ' has been deliverd to '+ intrID +'successfully, and the due date is two months later.', 'book/'+bBook._id);
+            Mail.sendEmail(intrID, '[Elevenlibrary]You have borrowed the book '+ bBook.name +' successfully', 'You have borrowed the book '+bBook.name+' successfully, please return the book within two months.', 'book/'+bBook._id);
           }
         });
       }
@@ -208,6 +217,8 @@ module.exports = function(app) {
         res.json({
           errType: 0
         });
+        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book '  + resbook.name + ' has been returned successfully', 'Your book '  + resbook.name + ' has been returned successfully', 'book/'+resbook._id);
+        Mail.sendEmail(intrID, '[Elevenlibrary]The book '  + resbook.name + ' has been returned successfully', 'The book '  + resbook.name + ' has been returned successfully', 'book/'+resbook._id);
       }
     });
   });

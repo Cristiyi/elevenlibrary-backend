@@ -1,5 +1,7 @@
 var Book = require('../../models/Book.js');
 var filter = require('../../models/Filter.js');
+var Mail = require('../../models/mail.js');
+
 
 
 module.exports = function(app) {
@@ -35,6 +37,7 @@ module.exports = function(app) {
         res.json({
           errType: 0,
         });
+        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book '  + resbook.name + ' has been approved by adminstrator.', 'Your book '  + resbook.name + ' has been approved by adminstrator.', 'book/'+resbook._id);
       };
     });
   });

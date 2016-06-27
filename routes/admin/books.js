@@ -38,7 +38,9 @@ module.exports = function(app) {
   // delete one book
   app.delete('/api/admin/books/:_id', filter.adminAuthorize, function(req, res) {
     var _id = req.params._id;
-    Book.remove({ _id: _id }, function(err, delBook) {
+    Book.findById({
+      _id: _id
+    }, function(err, oldBook) {
       if (err) {
         console.log('[Delete a book]DB delete a book err : ' + err);
         throw err;
@@ -46,11 +48,22 @@ module.exports = function(app) {
           'errType': 3
         });
       } else {
-        console.log("[Delete book Success]");
-        res.status(200).send({
-          errType: 0
+        Book.remove({ _id: _id }, function(err, delBook) {
+          if (err) {
+            console.log('[Delete a book]DB delete a book err : ' + err);
+            throw err;
+            res.json({
+              'errType': 3
+            });
+          } else {
+            console.log("[Delete book Success]");
+            res.status(200).send({
+              errType: 0
+            });
+            Mail.sendEmail(oldBook.ownerIntrID, '[Elevenlibrary]Your book '  + oldBook.name + ' has been deleted by adminstrator.', 'Your book '  + oldBook.name + ' has been deleted by adminstrator.', 'books/all');
+          };
         });
-      };
+      }
     });
   });
 
@@ -67,11 +80,11 @@ module.exports = function(app) {
           'errType': 3
         });
       } else {
-        console.log('[update book info]update book Successfull');
+        console.log('[update book info]update book Successfull', mdfBook);
         res.json({
           'errType': 0
         });
-        Mail.sendEmail('liuyibin@cn.ibm.com,dlzhjj@cn.ibm.com', '[Elevenlibrary]Admin modified the book ' + mdfBook.name, 'Your book ' + mdfBook.name + ' has been deleted by adminstrator. ', 'http://localhost/project/elevenlibrary-frontend/#/manage/books');
+        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of your book ' + mdfBook.name + ' has been changed by adminstrator.', 'The information of your book ' + mdfBook.name + 'has been changed by adminstrator ', 'book/' + _id);
       }
     });
   });
