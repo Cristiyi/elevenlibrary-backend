@@ -19,7 +19,10 @@ exports.sendEmail = function(to, subject, text, url) {
     text: '', // plaintext body
     html: '<!DOCTYPE html><html><head><title>Your test unsubscribe was successful</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="robots" content="noindex" /><style>  body {    font-family: Arial, Helvetica, sans-serif;  }</style></head><body><h2>'+subject+'</h2><h3>Welcome to ElevenLibrary.</h3><p>'+text+'</p><p>You can click <a href="'+exports.eleUrl + url+'"" target="_blank">here</a> to access.</p><h4>Do not reply: This note has been sent from a service machine.</h4></body></html>' // html body
   };
-  console.log(to, subject, text, url);
+  console.log("to:",to);
+  console.log("subject:",subject);
+  console.log("text:",text);
+  console.log("url:",url);
   if (to) {
     mailOptions.to = to;
   };

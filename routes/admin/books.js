@@ -80,7 +80,7 @@ module.exports = function(app) {
           'errType': 3
         });
       } else {
-        console.log('[update book info]update book Successfull', mdfBook);
+        console.log('[update book info]update book Successfull';
         res.json({
           'errType': 0
         });
