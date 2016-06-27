@@ -133,7 +133,7 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
-        Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID, 'The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID +', please confirm and approve the request.', 'book/'+book._id);
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID, 'The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID +', please confirm and approve the request.','book/'+book._id);
       }
     });
   });
