@@ -1,5 +1,7 @@
 var Book = require('../../models/Book.js');
 var filter = require('../../models/Filter.js');
+var Mail = require('../../models/mail.js');
+
 
 module.exports = function(app) {
   // User get all books
@@ -111,8 +113,7 @@ module.exports = function(app) {
           errType: 0,
           _id: newBook._id
         });
-        // Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book '+newBook.name+' has been uploaded by '+ newBook.ownerIntrID+', please confirm and approve the request.', 'book/'+book._id);
-        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]]The information of your book ' + book.name + ' has been changed by adminstrator.', 'The information of your book ' + book.name + 'has been changed by adminstrator ', 'book/' + _id);
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book '+newBook.name+' has been uploaded by '+ newBook.ownerIntrID+', please confirm and approve the request.', 'book/'+book._id);
       }
     });
   });
