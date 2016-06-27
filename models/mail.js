@@ -30,7 +30,7 @@ exports.sendEmail = function(to, subject, text, url) {
   var transporter = nodemailer.createTransport(smtpTransport(tranOption));
   transporter.sendMail(mailOptions, function(error, info) {
     if (error) {
-      return console.log(error);
+      console.log(error);
     };
     console.log('Message sent: ' + info.response);
   });

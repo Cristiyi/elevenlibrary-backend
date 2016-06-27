@@ -39,7 +39,6 @@ app.use(function(req, res, next) {
       req: req.body,
       err: error.stack
     });
-    res.status(500).send(error.stack);
   });
   reqDomain.run(next);
 });
