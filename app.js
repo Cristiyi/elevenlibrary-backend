@@ -77,6 +77,7 @@ app.use(function(req, res, next) {
 require('./routes/admin/books')(app);
 require('./routes/admin/events')(app);
 require('./routes/admin/logs')(app);
+require('./routes/admin/histories')(app);
 require('./routes/user/books')(app);
 require('./routes/login/login')(app);
 
