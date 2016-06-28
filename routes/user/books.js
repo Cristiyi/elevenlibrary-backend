@@ -129,11 +129,17 @@ module.exports = function(app) {
         throw err;
         res.send(err);
       } else {
-        console.log('[update book info]update book Successfull');
+        console.log('[update book info]update book Successfull', newBook);
         res.json({
           'errType': 0
         });
-        Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID, 'The information of the book '+newBook.name+' has been updated by '+ newBook.ownerIntrID +', please confirm and approve the request.','book/'+_id);
+        Book.findById({
+          _id: _id
+        }, function(err, book){
+          if (!err){
+            Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book '+book.name+' has been updated by '+ book.ownerIntrID +', please confirm and approve the request.','book/'+_id);
+          }
+        });
       }
     });
   });
