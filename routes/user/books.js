@@ -1,4 +1,5 @@
 var Book = require('../../models/Book.js');
+var History = require('../../models/History.js');
 var filter = require('../../models/Filter.js');
 var Mail = require('../../models/mail.js');
 
@@ -58,6 +59,12 @@ module.exports = function(app) {
                   errType: 0,
                   applyTime: applyTime
                 });
+                var history = {
+                  intrID: intrID,
+                  name: book.name,
+                  content: 'User '+intrID+' borrowed the book '+book.name+'.'
+                };
+                History.create(history);
                 Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been borrowed by '+intrID, 'Your book '  + book.name + ' has been borrowed by '+intrID+', please click on the Deliver button when the user comes to take the book.', 'book/'+book._id);
                 Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book '+ book.name +' successfully', 'You have reserved the book '+book.name+' successfully, please come to the owner to take the book within two days, or the request will be cancelled automatically.', 'book/'+book._id);
               }
@@ -92,6 +99,12 @@ module.exports = function(app) {
         res.send({
           errType: 0
         });
+        var history = {
+          intrID: intrID,
+          name: book.name,
+          content: 'User '+intrID+' cancelled the request for the book '+book.name+'.'
+        };
+        History.create(history);
         Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User '+intrID+' has cancelled the request for the book '+book.name, 'User '+intrID+' has cancelled the request for the book '+book.name, 'book/'+book._id);
         Mail.sendEmail(intrID, '[Elevenlibrary]You have cancelled the request for book '+ book.name +' successfully', 'You have cancelled the request for book '+ book.name +' successfully.', 'book/'+book._id);
       };
@@ -113,6 +126,12 @@ module.exports = function(app) {
           errType: 0,
           _id: newBook._id
         });
+        var history = {
+          intrID: intrID,
+          name: book.name,
+          content: 'User '+intrID+' uploaded the book '+book.name+'.'
+        };
+        History.create(history);
         Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book '+newBook.name+' has been uploaded by '+ newBook.ownerIntrID+', please confirm and approve the request.', 'book/'+newBook._id);
       }
     });
@@ -137,6 +156,12 @@ module.exports = function(app) {
           _id: _id
         }, function(err, book){
           if (!err){
+            var history = {
+              intrID: intrID,
+              name: book.name,
+              content: 'User '+intrID+' updated the book '+book.name+'.'
+            };
+            History.create(history);
             Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book '+book.name+' has been updated by '+ book.ownerIntrID +', please confirm and approve the request.','book/'+_id);
           }
         });
@@ -174,6 +199,7 @@ module.exports = function(app) {
       } else if (getExpireTime(resbook.applyTime, 2) < new Date()) {
         console.log('[Borrow a book] The book has expired');
       } else {
+        var intrID = resbook.intrID;
         var bTime = new Date();
         var rTime = getExpireTime(bTime, 30);
         Book.update({
@@ -194,6 +220,12 @@ module.exports = function(app) {
               borrowTime: bTime,
               returnTime: rTime
             });
+            var history = {
+              intrID: bBook.ownerIntrID,
+              name: book.name,
+              content: 'User '+bBook.ownerIntrID+' deliverd the book '+book.name+'.'
+            };
+            History.create(history);
             Mail.sendEmail(bBook.ownerIntrID, '[Elevenlibrary]Your book '  + bBook.name + ' has been deliverd to '+ intrID +'successfully', 'Your book '  + bBook.name + ' has been deliverd to '+ intrID +'successfully, and the due date is two months later.', 'book/'+bBook._id);
             Mail.sendEmail(intrID, '[Elevenlibrary]You have borrowed the book '+ bBook.name +' successfully', 'You have borrowed the book '+bBook.name+' successfully, please return the book within two months.', 'book/'+bBook._id);
           }
@@ -222,9 +254,16 @@ module.exports = function(app) {
           errType: 1
         });
       } else {
+        var intrID = resbook.intrID;
         res.json({
           errType: 0
         });
+        var history = {
+          intrID: intrID,
+          name: book.name,
+          content: 'User '+intrID+' returned the book '+book.name+'.'
+        };
+        History.create(history);
         Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book '  + resbook.name + ' has been returned successfully', 'Your book '  + resbook.name + ' has been returned successfully', 'book/'+resbook._id);
         Mail.sendEmail(intrID, '[Elevenlibrary]The book '  + resbook.name + ' has been returned successfully', 'The book '  + resbook.name + ' has been returned successfully', 'book/'+resbook._id);
       }
