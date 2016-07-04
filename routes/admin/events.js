@@ -6,6 +6,17 @@ var Mail = require('../../models/mail.js');
 
 
 module.exports = function(app) {
+  // get all histories
+  app.get('/api/admin/histories', filter.adminAuthorize, function(req, res) {
+    History.find({}, function(err, histories) {
+      if (err) {
+        console.log('[Find histories] Find History DB err : ' + err);
+        res.send(err);
+      } else {
+        res.send(histories);
+      };
+    });
+  });
   // get all confirmations
   app.get('/api/admin/confirmations', filter.adminAuthorize, function(req, res) {
     Book.find({
@@ -70,18 +81,6 @@ module.exports = function(app) {
       }
     }).sort({
       applyTime: -1
-    });
-  });
-
-  // get all histories
-  app.get('/api/admin/histories', filter.adminAuthorize, function(req, res) {
-    History.find({}, function(err, histories) {
-      if (err) {
-        console.log('[Find histories] Find History DB err : ' + err);
-        res.send(err);
-      } else {
-        res.send(histories);
-      };
     });
   });
 };
