@@ -126,12 +126,6 @@ module.exports = function(app) {
           errType: 0,
           _id: newBook._id
         });
-        var history = {
-          intrID: intrID,
-          name: book.name,
-          content: 'User '+intrID+' uploaded the book '+book.name+'.'
-        };
-        History.create(history);
         Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book '+newBook.name+' has been uploaded by '+ newBook.ownerIntrID+', please confirm and approve the request.', 'book/'+newBook._id);
       }
     });

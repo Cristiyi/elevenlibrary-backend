@@ -49,7 +49,7 @@ module.exports = function(app) {
         res.json({
           errType: 0,
         });
-        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book '  + resbook.name + ' has been approved by adminstrator.', 'Your book '  + resbook.name + ' has been approved by adminstrator.', 'book/'+resbook._id);
+        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book <strong>'  + resbook.name + '</strong> has been approved by adminstrator.', 'Your book <strong>'  + resbook.name + '</strong> has been approved by adminstrator.', 'book/'+resbook._id);
       };
     });
   });
