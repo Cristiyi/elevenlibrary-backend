@@ -146,16 +146,10 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
-        Book.findById({
+        Book.findOne({
           _id: _id
         }, function(err, book){
           if (!err){
-            var history = {
-              intrID: intrID,
-              name: book.name,
-              content: 'User '+intrID+' updated the book '+book.name+'.'
-            };
-            History.create(history);
             Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book '+book.name+' has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+book.ownerIntrID+'"" target="_blank">'+book.ownerIntrID+'</a>, please confirm and approve the request.','book/'+_id);
           }
         });
