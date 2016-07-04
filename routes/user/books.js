@@ -126,6 +126,7 @@ module.exports = function(app) {
           errType: 0,
           _id: newBook._id
         });
+        Mail.sendEmail(newBook.ownerIntrID, '[Elevenlibrary]Your book '  + newBook.name + ' has been uploaded successfully.', 'Your book <strong>'  + newBook.name + '</strong> has been uploaded successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">'+Adminstrator+'</a>\'s approval.', 'book/'+newBook._id');
         Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book <strong>'+newBook.name+'</strong> has been uploaded by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+newBook.ownerIntrID+'"" target="_blank">'+newBook.ownerIntrID+'</a>, please confirm and approve the request.', 'book/'+newBook._id);
       }
     });
@@ -150,6 +151,7 @@ module.exports = function(app) {
           _id: _id
         }, function(err, book){
           if (!err){
+            Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been updated successfully.', 'Your book <strong>'  + book.name + '</strong> has been updated successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">'+Adminstrator+'</a>\'s approval.', 'book/'+book._id');
             Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book <strong>'+book.name+'</strong> has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+book.ownerIntrID+'"" target="_blank">'+book.ownerIntrID+'</a>, please confirm and approve the request.','book/'+_id);
           }
         });
