@@ -65,7 +65,7 @@ module.exports = function(app) {
                   content: 'User '+intrID+' borrowed the book '+book.name+'.'
                 };
                 History.create(history);
-                Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been borrowed by '+intrID, 'Your book <strong>'  + book.name + '</strong> has been borrowed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+intrID+'"" target="_blank">'+intrID+'</a>, please click on the Deliver button when the user comes to take the book.', 'book/'+book._id);
+                Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been borrowed by '+intrID, 'Your book <strong>'  + book.name + '</strong> has been borrowed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+intrID+'" target="_blank">'+intrID+'</a>, please click on the Deliver button when the user comes to take the book.', 'book/'+book._id);
                 Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book '+ book.name +' successfully', 'You have reserved the book <strong>'+book.name+'</strong> successfully, please come to the owner to take the book within two days, or the request will be cancelled automatically.', 'book/'+book._id);
               }
             });
@@ -105,7 +105,7 @@ module.exports = function(app) {
           content: 'User '+intrID+' cancelled the request for the book '+book.name+'.'
         };
         History.create(history);
-        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User '+intrID+' has cancelled the request for the book '+book.name, 'User <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+intrID+'"" target="_blank">'+intrID+'</a> has cancelled the request for the book <strong>'+book.name+'</strong>', 'book/'+book._id);
+        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User '+intrID+' has cancelled the request for the book '+book.name, 'User <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+intrID+'" target="_blank">'+intrID+'</a> has cancelled the request for the book <strong>'+book.name+'</strong>', 'book/'+book._id);
         Mail.sendEmail(intrID, '[Elevenlibrary]You have cancelled the request for book '+ book.name +' successfully', 'You have cancelled the request for book <strong>'+ book.name +'</strong> successfully.', 'book/'+book._id);
       };
     });
@@ -126,8 +126,8 @@ module.exports = function(app) {
           errType: 0,
           _id: newBook._id
         });
-        Mail.sendEmail(newBook.ownerIntrID, '[Elevenlibrary]Your book '  + newBook.name + ' has been uploaded successfully.', 'Your book <strong>'  + newBook.name + '</strong> has been uploaded successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">'+Adminstrator+'</a>\'s approval.', 'book/'+newBook._id');
-        Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book <strong>'+newBook.name+'</strong> has been uploaded by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+newBook.ownerIntrID+'"" target="_blank">'+newBook.ownerIntrID+'</a>, please confirm and approve the request.', 'book/'+newBook._id);
+        Mail.sendEmail(newBook.ownerIntrID, '[Elevenlibrary]Your book '  + newBook.name + ' has been uploaded successfully.', 'Your book <strong>'  + newBook.name + '</strong> has been uploaded successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'" target="_blank">Adminstrator</a>\'s approval.', 'book/'+newBook._id);
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book <strong>'+newBook.name+'</strong> has been uploaded by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+newBook.ownerIntrID+'" target="_blank">'+newBook.ownerIntrID+'</a>, please confirm and approve the request.', 'book/'+newBook._id);
       }
     });
   });
@@ -151,7 +151,7 @@ module.exports = function(app) {
           _id: _id
         }, function(err, book){
           if (!err){
-            Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been updated successfully.', 'Your book <strong>'  + book.name + '</strong> has been updated successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">'+Adminstrator+'</a>\'s approval.', 'book/'+book._id');
+            Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been updated successfully.', 'Your book <strong>'  + book.name + '</strong> has been updated successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'" target="_blank">Adminstrator</a>\'s approval.', 'book/'+book._id);
             Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book <strong>'+book.name+'</strong> has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+book.ownerIntrID+'"" target="_blank">'+book.ownerIntrID+'</a>, please confirm and approve the request.','book/'+_id);
           }
         });
