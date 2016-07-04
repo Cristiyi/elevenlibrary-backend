@@ -84,7 +84,7 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
-        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of your book ' + mdfBook.name + ' has been changed by adminstrator.', 'The information of your book <strong>' + mdfBook.name + '</strong> has been changed by adminstrator ', 'book/' + _id);
+        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of your book ' + mdfBook.name + ' has been changed by adminstrator.', 'The information of your book <strong>' + mdfBook.name + '</strong> has been changed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">'+adminstrator+'</a>.', 'book/' + _id);
       }
     });
   });

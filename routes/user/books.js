@@ -150,7 +150,7 @@ module.exports = function(app) {
           _id: _id
         }, function(err, book){
           if (!err){
-            Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book '+book.name+' has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+book.ownerIntrID+'"" target="_blank">'+book.ownerIntrID+'</a>, please confirm and approve the request.','book/'+_id);
+            Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book <strong>'+book.name+'</strong> has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+book.ownerIntrID+'"" target="_blank">'+book.ownerIntrID+'</a>, please confirm and approve the request.','book/'+_id);
           }
         });
       }
