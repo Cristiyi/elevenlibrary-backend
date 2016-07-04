@@ -67,13 +67,12 @@ module.exports = function(app) {
                 History.create(history);
                 Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book ' + book.name + ' has been borrowed by ' + intrID, 'Your book <strong>' + book.name + '</strong> has been borrowed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '" target="_blank">' + intrID + '</a>, please click on the Deliver button when the user comes to take the book.', 'book/' + book._id);
                 Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book ' + book.name + ' successfully', 'You have reserved the book <strong>' + book.name + '</strong> successfully, please come to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + book.ownerIntrID + '" target="_blank">' + book.ownerIntrID + '</a> to take the book before <strong>'+ format(getExpireTime(applyTime, 2)) + '</strong>, or the request will be cancelled automatically.', 'book/' + book._id);
-              }
+              };
             });
           }
         });
-      }
+      };
     });
-
   });
 
   // cancel borrow book
