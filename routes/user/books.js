@@ -43,7 +43,7 @@ module.exports = function(app) {
               errType: 2
             });
           } else {
-            var applyTime = Date();
+            var applyTime = new Date();
             Book.update({
               _id: _id
             }, {
@@ -55,6 +55,7 @@ module.exports = function(app) {
                 console.log('[Update book status and time] Update book DB err : ' + err);
               } else {
                 console.log('[Update book status and time] Update book Successful');
+                var dueDate = format(getExpireTime(applyTime, 2));
                 res.json({
                   errType: 0,
                   applyTime: applyTime
@@ -65,7 +66,6 @@ module.exports = function(app) {
                   content: 'User ' + intrID + ' borrowed the book ' + book.name + '.'
                 };
                 History.create(history);
-                var dueDate = format(getExpireTime(applyTime, 2));
                 Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book ' + book.name + ' successfully', 'You have reserved the book <strong>' + book.name + '</strong> successfully, please come to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + book.ownerIntrID + '" target="_blank">' + book.ownerIntrID + '</a> to take the book before <strong>'+ dueDate + '</strong>, or the request will be cancelled automatically.', 'book/' + book._id);
                 Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book ' + book.name + ' has been borrowed by ' + intrID, 'Your book <strong>' + book.name + '</strong> has been borrowed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '" target="_blank">' + intrID + '</a>, please click on the Deliver button when the user comes to take the book.','book/' + book._id);
               };
@@ -457,12 +457,9 @@ module.exports = function(app) {
 
   function format(time) {
     var y = time.getFullYear();
-    var m = time.getMonth() + 1;
-    var d = time.getDate() + 1;
-    var h = time.getHours() + 1;
-    var mm = time.getMinutes() + 1;
-    var s = time.getSeconds() + 1;
-    return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+    var m = time.getMonth();
+    var d = time.getDate();
+    return y + '-' + add0(m) + '-' + add0(d);
   };
 
 };
