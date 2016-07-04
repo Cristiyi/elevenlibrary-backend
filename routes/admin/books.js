@@ -60,7 +60,7 @@ module.exports = function(app) {
             res.status(200).send({
               errType: 0
             });
-            Mail.sendEmail(oldBook.ownerIntrID, '[Elevenlibrary]Your book '  + oldBook.name + ' has been deleted by adminstrator.', 'Your book '  + oldBook.name + ' has been deleted by adminstrator.', 'books/all');
+            Mail.sendEmail(oldBook.ownerIntrID, '[Elevenlibrary]Your book '  + oldBook.name + ' has been deleted by adminstrator.', 'Your book <strong>'  + oldBook.name + '</strong> has been deleted by adminstrator.', 'books/all');
           };
         });
       }
@@ -84,7 +84,7 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
-        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of your book ' + mdfBook.name + ' has been changed by adminstrator.', 'The information of your book ' + mdfBook.name + 'has been changed by adminstrator ', 'book/' + _id);
+        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of your book ' + mdfBook.name + ' has been changed by adminstrator.', 'The information of your book <strong>' + mdfBook.name + '</strong> has been changed by adminstrator ', 'book/' + _id);
       }
     });
   });

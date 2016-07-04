@@ -65,8 +65,8 @@ module.exports = function(app) {
                   content: 'User '+intrID+' borrowed the book '+book.name+'.'
                 };
                 History.create(history);
-                Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been borrowed by '+intrID, 'Your book '  + book.name + ' has been borrowed by '+intrID+', please click on the Deliver button when the user comes to take the book.', 'book/'+book._id);
-                Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book '+ book.name +' successfully', 'You have reserved the book '+book.name+' successfully, please come to the owner to take the book within two days, or the request will be cancelled automatically.', 'book/'+book._id);
+                Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book '  + book.name + ' has been borrowed by '+intrID, 'Your book <strong>'  + book.name + '</strong> has been borrowed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+intrID+'"" target="_blank">'+intrID+'</a>, please click on the Deliver button when the user comes to take the book.', 'book/'+book._id);
+                Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book '+ book.name +' successfully', 'You have reserved the book <strong>'+book.name+'</strong> successfully, please come to the owner to take the book within two days, or the request will be cancelled automatically.', 'book/'+book._id);
               }
             });
           }
@@ -105,8 +105,8 @@ module.exports = function(app) {
           content: 'User '+intrID+' cancelled the request for the book '+book.name+'.'
         };
         History.create(history);
-        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User '+intrID+' has cancelled the request for the book '+book.name, 'User '+intrID+' has cancelled the request for the book '+book.name, 'book/'+book._id);
-        Mail.sendEmail(intrID, '[Elevenlibrary]You have cancelled the request for book '+ book.name +' successfully', 'You have cancelled the request for book '+ book.name +' successfully.', 'book/'+book._id);
+        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User '+intrID+' has cancelled the request for the book '+book.name, 'User <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+intrID+'"" target="_blank">'+intrID+'</a> has cancelled the request for the book <strong>'+book.name+'</strong>', 'book/'+book._id);
+        Mail.sendEmail(intrID, '[Elevenlibrary]You have cancelled the request for book '+ book.name +' successfully', 'You have cancelled the request for book <strong>'+ book.name +'</strong> successfully.', 'book/'+book._id);
       };
     });
   });
@@ -126,7 +126,7 @@ module.exports = function(app) {
           errType: 0,
           _id: newBook._id
         });
-        Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book '+newBook.name+' has been uploaded by '+ newBook.ownerIntrID+', please confirm and approve the request.', 'book/'+newBook._id);
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book '+newBook.name+' has been uploaded by '+newBook.ownerIntrID, 'Book <strong>'+newBook.name+'</strong> has been uploaded by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+newBook.ownerIntrID+'"" target="_blank">'+newBook.ownerIntrID+'</a>, please confirm and approve the request.', 'book/'+newBook._id);
       }
     });
   });
@@ -156,7 +156,7 @@ module.exports = function(app) {
               content: 'User '+intrID+' updated the book '+book.name+'.'
             };
             History.create(history);
-            Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book '+book.name+' has been updated by '+ book.ownerIntrID +', please confirm and approve the request.','book/'+_id);
+            Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book '+book.name+' has been updated by '+ book.ownerIntrID, 'The information of the book '+book.name+' has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+book.ownerIntrID+'"" target="_blank">'+book.ownerIntrID+'</a>, please confirm and approve the request.','book/'+_id);
           }
         });
       }
@@ -220,8 +220,8 @@ module.exports = function(app) {
               content: 'User '+bBook.ownerIntrID+' deliverd the book '+book.name+'.'
             };
             History.create(history);
-            Mail.sendEmail(bBook.ownerIntrID, '[Elevenlibrary]Your book '  + bBook.name + ' has been deliverd to '+ intrID +'successfully', 'Your book '  + bBook.name + ' has been deliverd to '+ intrID +'successfully, and the due date is two months later.', 'book/'+bBook._id);
-            Mail.sendEmail(intrID, '[Elevenlibrary]You have borrowed the book '+ bBook.name +' successfully', 'You have borrowed the book '+bBook.name+' successfully, please return the book within two months.', 'book/'+bBook._id);
+            Mail.sendEmail(bBook.ownerIntrID, '[Elevenlibrary]Your book '  + bBook.name + ' has been deliverd to '+ intrID +'successfully', 'Your book <strong>'  + bBook.name + '</strong> has been deliverd to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+intrID+'"" target="_blank">'+intrID+'</a> successfully, and the due date is two months later.', 'book/'+bBook._id);
+            Mail.sendEmail(intrID, '[Elevenlibrary]You have borrowed the book '+ bBook.name +' successfully', 'You have borrowed the book <strong>'+bBook.name+'</strong> successfully, please return the book within two months.', 'book/'+bBook._id);
           }
         });
       }
@@ -258,8 +258,8 @@ module.exports = function(app) {
           content: 'User '+intrID+' returned the book '+book.name+'.'
         };
         History.create(history);
-        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book '  + resbook.name + ' has been returned successfully', 'Your book '  + resbook.name + ' has been returned successfully', 'book/'+resbook._id);
-        Mail.sendEmail(intrID, '[Elevenlibrary]The book '  + resbook.name + ' has been returned successfully', 'The book '  + resbook.name + ' has been returned successfully', 'book/'+resbook._id);
+        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book '  + resbook.name + ' has been returned successfully', 'Your book <strong>'  + resbook.name + '</strong> has been returned successfully', 'book/'+resbook._id);
+        Mail.sendEmail(intrID, '[Elevenlibrary]The book '  + resbook.name + ' has been returned successfully', 'The book <strong>'  + resbook.name + '</strong> has been returned successfully', 'book/'+resbook._id);
       }
     });
   });
