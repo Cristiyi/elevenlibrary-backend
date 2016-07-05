@@ -55,7 +55,7 @@ module.exports = function(app) {
           content: 'Admin ' + Mail.admin + ' approved the book ' + resbook.name + '.'
         };
         History.create(history);
-        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book '  + resbook.name + ' has been approved by Adminstrator.', 'Your book <strong>'  + resbook.name + '</strong> has been approved by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">'+Adminstrator+'</a>.', 'book/'+resbook._id);
+        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]'  + resbook.name + ' has been approved by Adminstrator.', '<strong>'  + resbook.name + '</strong> has been approved by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'book/'+resbook._id);
       };
     });
   });

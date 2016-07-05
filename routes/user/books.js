@@ -66,8 +66,8 @@ module.exports = function(app) {
                   content: 'User ' + intrID + ' borrowed the book ' + book.name + '.'
                 };
                 History.create(history);
-                Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved the book ' + book.name + ' successfully', 'You have reserved the book <strong>' + book.name + '</strong> successfully, please come to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + book.ownerIntrID + '" target="_blank">' + book.ownerIntrID + '</a> to take the book before <strong>'+ dueDate + '</strong>, or the request will be cancelled automatically.', 'book/' + book._id);
-                Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book ' + book.name + ' has been borrowed by ' + intrID, 'Your book <strong>' + book.name + '</strong> has been borrowed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '" target="_blank">' + intrID + '</a>, please click on the Deliver button when the user comes to take the book.','book/' + book._id);
+                Mail.sendEmail(intrID, '[Elevenlibrary]You have reserved ' + book.name + ' successfully.', 'You have reserved <strong>' + book.name + '</strong> successfully, please come to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + book.ownerIntrID + '" target="_blank">' + book.ownerIntrID + '</a> to take it before <strong>'+ dueDate + '</strong>, or the request will be cancelled automatically.', 'book/' + book._id);
+                Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]' + book.name + ' has been borrowed by ' + intrID, '<strong>' + book.name + '</strong> has been borrowed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '" target="_blank">' + intrID + '</a>, please click on the Deliver button when the user comes to take it.','book/' + book._id);
               };
             });
           }
@@ -105,8 +105,8 @@ module.exports = function(app) {
           content: 'User ' + intrID + ' cancelled the request for the book ' + book.name + '.'
         };
         History.create(history);
-        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User ' + intrID + ' has cancelled the request for the book ' + book.name, 'User <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '" target="_blank">' + intrID + '</a> has cancelled the request for the book <strong>' + book.name + '</strong>', 'book/' + book._id);
-        Mail.sendEmail(intrID, '[Elevenlibrary]You have cancelled the request for book ' + book.name + ' successfully', 'You have cancelled the request for book <strong>' + book.name + '</strong> successfully.', 'book/' + book._id);
+        Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]User ' + intrID + ' has cancelled the request for ' + book.name, 'User <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '" target="_blank">' + intrID + '</a> has cancelled the request for <strong>' + book.name + '</strong>', 'book/' + book._id);
+        Mail.sendEmail(intrID, '[Elevenlibrary]You have cancelled the request for ' + book.name + ' successfully', 'You have cancelled the request for <strong>' + book.name + '</strong> successfully.', 'book/' + book._id);
       };
     });
   });
@@ -132,8 +132,8 @@ module.exports = function(app) {
           content: 'User ' + newBook.ownerIntrID + ' uploaded the book ' + newBook.name + '.'
         };
         History.create(history);
-        Mail.sendEmail(newBook.ownerIntrID, '[Elevenlibrary]Your book ' + newBook.name + ' has been uploaded successfully.', 'Your book <strong>' + newBook.name + '</strong> has been uploaded successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + Mail.admin + '" target="_blank">Adminstrator</a>\'s approval.', 'book/' + newBook._id);
-        Mail.sendEmail(Mail.admin, '[Elevenlibrary]Book ' + newBook.name + ' has been uploaded by ' + newBook.ownerIntrID, 'Book <strong>' + newBook.name + '</strong> has been uploaded by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + newBook.ownerIntrID + '" target="_blank">' + newBook.ownerIntrID + '</a>, please confirm and approve the request.', 'book/' + newBook._id);
+        Mail.sendEmail(newBook.ownerIntrID, '[Elevenlibrary]' + newBook.name + ' has been uploaded successfully.', '<strong>' + newBook.name + '</strong> has been uploaded successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + Mail.admin + '" target="_blank">Adminstrator</a>\'s approval.', 'book/' + newBook._id);
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]' + newBook.name + ' has been uploaded by ' + newBook.ownerIntrID, '<strong>' + newBook.name + '</strong> has been uploaded by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + newBook.ownerIntrID + '" target="_blank">' + newBook.ownerIntrID + '</a>, please confirm and approve the request.', 'book/' + newBook._id);
       }
     });
   });
@@ -159,8 +159,8 @@ module.exports = function(app) {
           content: 'User ' + mdfBook.ownerIntrID + ' uploaded the book ' + mdfBook.name + '.'
         };
         History.create(history);
-        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]Your book ' + mdfBook.name + ' has been updated successfully.', 'Your book <strong>' + mdfBook.name + '</strong> has been updated successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + Mail.admin + '" target="_blank">Adminstrator</a>\'s approval.', 'book/' + mdfBook._id);
-        Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of the book ' + mdfBook.name + ' has been updated by ' + mdfBook.ownerIntrID, 'The information of the book <strong>' + mdfBook.name + '</strong> has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + mdfBook.ownerIntrID + '"" target="_blank">' + mdfBook.ownerIntrID + '</a>, please confirm and approve the request.', 'book/' + _id);
+        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]' + mdfBook.name + ' has been updated successfully.', '<strong>' + mdfBook.name + '</strong> has been updated successfully. It will share to public after the <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + Mail.admin + '" target="_blank">Adminstrator</a>\'s approval.', 'book/' + mdfBook._id);
+        Mail.sendEmail(Mail.admin, '[Elevenlibrary]The information of ' + mdfBook.name + ' has been updated by ' + mdfBook.ownerIntrID, 'The information of <strong>' + mdfBook.name + '</strong> has been updated by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + mdfBook.ownerIntrID + '"" target="_blank">' + mdfBook.ownerIntrID + '</a>, please confirm and approve the request.', 'book/' + _id);
       }
     });
   });
@@ -191,7 +191,7 @@ module.exports = function(app) {
               content: 'User ' + book.ownerIntrID + ' deleted the book ' + book.name + '.'
             };
             History.create(history);
-            Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]Your book ' + book.name + ' has been deleted successfully.', 'Your book <strong>' + book.name + '</strong> has been deleted successfully.', 'book/' + book._id);
+            Mail.sendEmail(book.ownerIntrID, '[Elevenlibrary]' + book.name + ' has been deleted successfully.', '<strong>' + book.name + '</strong> has been deleted successfully.', 'book/' + book._id);
           }
         });
       }
@@ -238,8 +238,8 @@ module.exports = function(app) {
               content: 'User ' + resbook.ownerIntrID + ' deliverd the book ' + resbook.name + '.'
             };
             History.create(history);
-            Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book ' + resbook.name + ' has been deliverd to ' + intrID + 'successfully', 'Your book <strong>' + resbook.name + '</strong> has been deliverd to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '"" target="_blank">' + intrID + '</a> successfully, and the due date is <strong>'+ format(rTime) + '</strong>.', 'book/' + resbook._id);
-            Mail.sendEmail(intrID, '[Elevenlibrary]You have borrowed the book ' + resbook.name + ' successfully', 'You have borrowed the book <strong>' + resbook.name + '</strong> successfully, please return the book before <strong>'+ format(rTime) + '</strong>.', 'book/' + resbook._id);
+            Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]' + resbook.name + ' has been deliverd to ' + intrID + 'successfully', '<strong>' + resbook.name + '</strong> has been deliverd to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '"" target="_blank">' + intrID + '</a> successfully, and the due date is <strong>'+ format(rTime) + '</strong>.', 'book/' + resbook._id);
+            Mail.sendEmail(intrID, '[Elevenlibrary]You have borrowed ' + resbook.name + ' successfully', 'You have borrowed <strong>' + resbook.name + '</strong> successfully, please return it before <strong>'+ format(rTime) + '</strong>.', 'book/' + resbook._id);
           }
         });
       }
@@ -276,8 +276,8 @@ module.exports = function(app) {
           content: 'User ' + intrID + ' returned the book ' + book.name + '.'
         };
         History.create(history);
-        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]Your book ' + resbook.name + ' has been returned successfully', 'Your book <strong>' + resbook.name + '</strong> has been returned successfully', 'book/' + resbook._id);
-        Mail.sendEmail(intrID, '[Elevenlibrary]The book ' + resbook.name + ' has been returned successfully', 'The book <strong>' + resbook.name + '</strong> has been returned successfully', 'book/' + resbook._id);
+        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]' + resbook.name + ' has been returned successfully', '<strong>' + resbook.name + '</strong> has been returned successfully', 'book/' + resbook._id);
+        Mail.sendEmail(intrID, '[Elevenlibrary]' + resbook.name + ' has been returned successfully', '<strong>' + resbook.name + '</strong> has been returned successfully', 'book/' + resbook._id);
       }
     });
   });
