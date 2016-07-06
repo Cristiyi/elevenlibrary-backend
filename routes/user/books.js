@@ -15,7 +15,7 @@ module.exports = function(app) {
       } else {
         res.send(books);
       };
-    }).sort({likesCount:-1});
+    }).sort({ likesCount: -1 });
   });
 
   // borrow book
@@ -197,24 +197,37 @@ module.exports = function(app) {
         });
       }
     })
-
   });
 
   // deliver one book
   app.post('/api/user/books/deliver/:_id', filter.authorize, function(req, res) {
     var _id = req.params._id;
-
+    var now = new Date();
     Book.findOne({
       _id: _id
     }, function(err, resbook) {
       if (err) {
         console.log('[Borrow a book] Find the reserved book DB err : ' + err);
-      } else if (getExpireTime(resbook.applyTime, 2) < new Date()) {
+      } else if (getExpireTime(resbook.applyTime, 2).getTime() < now.getTime()) {
         console.log('[Borrow a book] The book has expired');
+        Book.findOneAndUpdate({
+          _id: _id
+        }, {
+          status: 0,
+          $unset: {
+            intrID: '',
+            applyTime: null
+          }
+        }, function(err, book) {
+          res.json({
+            errType: 1
+          })
+        });
       } else {
         var intrID = resbook.intrID;
         var bTime = new Date();
         var rTime = getExpireTime(bTime, 30);
+        console.log('bTime', bTime, '\rTime', rTime);
         Book.update({
           _id: _id
         }, {
@@ -239,7 +252,7 @@ module.exports = function(app) {
               content: 'User ' + resbook.ownerIntrID + ' deliverd the book ' + resbook.name + '.'
             };
             History.create(history);
-            Mail.sendEmail(resbook.ownerIntrID, resbook.name + ' has been deliverd to ' + intrID + 'successfully', '<strong>' + resbook.name + '</strong> has been deliverd to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '"" target="_blank">' + intrID + '</a> successfully, and the due date is <strong>' + format(rTime) + '</strong>.', 'book/' + resbook._id);
+            Mail.sendEmail(resbook.ownerIntrID, resbook.name + ' has been deliverd to ' + intrID + ' successfully', '<strong>' + resbook.name + '</strong> has been deliverd to <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + intrID + '"" target="_blank">' + intrID + '</a> successfully, and the due date is <strong>' + format(rTime) + '</strong>.', 'book/' + resbook._id);
             Mail.sendEmail(intrID, 'You have borrowed ' + resbook.name + ' successfully', 'You have borrowed <strong>' + resbook.name + '</strong> successfully, please return it before <strong>' + format(rTime) + '</strong>.', 'book/' + resbook._id);
           }
         });
@@ -447,20 +460,19 @@ module.exports = function(app) {
             simBooks.push(books[index]);
           };
           res.send(simBooks);
-        }).sort({likesCount:-1});
+        }).sort({ likesCount: -1 });
       }
     });
   });
 
   // GetPopularBooks
-  app.get('/api/user/books/popular', function(req, res){
+  app.get('/api/user/books/popular', function(req, res) {
     res.send(Schedule.popularBooks);
   })
 
   function getExpireTime(now, num) {
-    var expTime = new Date();
-    expTime.setDate(now.getDate() + num);
-    return expTime;
+    now.setDate(now.getDate() + num);
+    return now;
   };
 
   function add0(m) {
