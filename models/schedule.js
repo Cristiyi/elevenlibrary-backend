@@ -12,7 +12,8 @@ var popJob = schedule.scheduleJob(popRule, function() {
 });
 
 var expRule = new schedule.RecurrenceRule();
-expRule.hour = 17;
+var hour = parseInt(process.env.CHECK_HOUR);
+expRule.hour = hour;
 
 var expJob = schedule.scheduleJob(expRule, function() {
   checkExpireBook();

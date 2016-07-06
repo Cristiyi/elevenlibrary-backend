@@ -61,7 +61,7 @@ module.exports = function(app) {
             res.status(200).send({
               errType: 0
             });
-            Mail.sendEmail(oldBook.ownerIntrID, '[Elevenlibrary]'  + oldBook.name + ' has been deleted by Adminstrator.', '<strong>'  + oldBook.name + '</strong> has been deleted by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'books/all');
+            Mail.sendEmail(oldBook.ownerIntrID, oldBook.name + ' has been deleted by Adminstrator.', '<strong>'  + oldBook.name + '</strong> has been deleted by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'books/all');
             var history = {
               intrID: 'Adminstrator',
               name: oldBook.name,
@@ -91,7 +91,7 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
-        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of ' + mdfBook.name + ' has been changed by Adminstrator.', 'The information of <strong>' + mdfBook.name + '</strong> has been changed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'book/' + _id);
+        Mail.sendEmail(mdfBook.ownerIntrID, 'The information of ' + mdfBook.name + ' has been changed by Adminstrator.', 'The information of <strong>' + mdfBook.name + '</strong> has been changed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'book/' + _id);
         var history = {
           intrID: 'Adminstrator',
           name: mdfBook.name,
