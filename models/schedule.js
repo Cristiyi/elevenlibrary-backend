@@ -12,8 +12,17 @@ var popJob = schedule.scheduleJob(popRule, function() {
 });
 
 var expRule = new schedule.RecurrenceRule();
-var hour = parseInt(process.env.CHECK_HOUR);
-expRule.hour = hour;
+if (process.env.CHECK_HOUR == undefined || process.env.CHECK_MINUTE == undefined){
+  expRule.hour = 17;
+  expRule.minute = 0;
+} else {
+  var hour = parseInt(process.env.CHECK_HOUR);
+  var minute = parseInt(process.env.CHECK_MINUTE);
+  expRule.hour = hour;
+  expRule.minute = minute;
+}
+
+console.log('CheckExpireBook Job will start at ' + hour + ':' + minute + ' everyday.');
 
 var expJob = schedule.scheduleJob(expRule, function() {
   checkExpireBook();
