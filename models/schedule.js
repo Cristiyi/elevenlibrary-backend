@@ -13,8 +13,7 @@ var popJob = schedule.scheduleJob(popRule, function() {
 
 var expRule = new schedule.RecurrenceRule();
 if (process.env.CHECK_HOUR == undefined || process.env.CHECK_MINUTE == undefined) {
-  expRule.hour = 17;
-  expRule.minute = 0;
+  expRule.second = 0;
 } else {
   var hour = parseInt(process.env.CHECK_HOUR);
   var minute = parseInt(process.env.CHECK_MINUTE);
