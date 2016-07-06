@@ -78,7 +78,7 @@ function checkExpireBook() {
           });
         };
       } else if (books[i].status == 2 && typeof(books[i].borrowTime != undefined)) {
-        var dueDate = format(books[i].returnTime);
+        var dueDate = format(books[i].borrowTime);
         if (getExpireTime(books[i].borrowTime, 30).getTime() < now.getTime()) {
           Mail.sendEmail(books[i].intrID, books[i].name + ' is overdue now. Please return it as soon as possible.', 'You borrowed <strong>' + books[i].name + '</strong> on ' + dueDate + '. It\'s overdue now, please return it to its owner <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + books[i].ownerIntrID + '" target="_blank">' + books[i].ownerIntrID + '</a> as soon as possible. Thank you.', 'book/' + books[i]._id);
           Mail.sendEmail(books[i].ownerIntrID, books[i].name + ' is overdue now. Please get it back as soon as possible.', 'You lent <strong>' + books[i].name + '</strong> on ' + dueDate + '. It\'s overdue now, please get it back from <a href="http://faces.tap.ibm.com/bluepages/profile.html?email=' + books[i].intrID + '" target="_blank">' + books[i].intrID + '</a> as soon as possible.', 'book/' + books[i]._id);
