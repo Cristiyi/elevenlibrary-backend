@@ -5,7 +5,7 @@ var History = require('./History.js');
 
 
 var popRule = new schedule.RecurrenceRule();
-popRule.minute = [0, 30];
+popRule.second = 0;
 
 var popJob = schedule.scheduleJob(popRule, function() {
   getPopularBooks();
