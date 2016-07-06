@@ -26,6 +26,7 @@ var BookSchema = new mongoose.Schema({
 
 
   likes: [String], // Likes
+  likesCount: {type: Number, default: 0},
   rates: [{ intrID: String, value: Number }], // Rates
   comments: [{ intrID: String, content: String, time: Date }], // Comments
 });

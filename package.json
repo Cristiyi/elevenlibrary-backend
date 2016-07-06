@@ -21,6 +21,7 @@
     "mongodb": "^2.0.44",
     "mongoose": "^4.1.9",
     "morgan": "^1.6.1",
+    "node-schedule": "^1.1.1",
     "nodemailer": "^2.4.1",
     "nodemailer-smtp-transport": "^2.5.0",
     "serve-favicon": "~2.3.0",

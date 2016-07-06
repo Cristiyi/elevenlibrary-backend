@@ -3,8 +3,6 @@ var History = require('../../models/History.js');
 var filter = require('../../models/Filter.js');
 var Mail = require('../../models/mail.js');
 
-
-
 module.exports = function(app) {
   // get all histories
   app.get('/api/admin/histories', filter.adminAuthorize, function(req, res) {
@@ -15,7 +13,7 @@ module.exports = function(app) {
       } else {
         res.send(histories);
       };
-    });
+    }).sort({time: -1});
   });
   // get all confirmations
   app.get('/api/admin/confirmations', filter.adminAuthorize, function(req, res) {
@@ -50,12 +48,12 @@ module.exports = function(app) {
           errType: 0,
         });
         var history = {
-          intrID: 'Admin',
+          intrID: 'Adminstrator',
           name: resbook.name,
-          content: 'Admin ' + Mail.admin + ' approved the book ' + resbook.name + '.'
+          content: 'Adminstrator ' + Mail.admin + ' approved the book ' + resbook.name + '.'
         };
         History.create(history);
-        Mail.sendEmail(resbook.ownerIntrID, '[Elevenlibrary]'  + resbook.name + ' has been approved by Adminstrator.', '<strong>'  + resbook.name + '</strong> has been approved by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'book/'+resbook._id);
+        Mail.sendEmail(resbook.ownerIntrID, resbook.name + ' has been approved by Adminstrator.', '<strong>'  + resbook.name + '</strong> has been approved by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'book/'+resbook._id);
       };
     });
   });

@@ -2,6 +2,7 @@ var Book = require('../../models/Book.js');
 var filter = require('../../models/Filter.js');
 var logger = require("../../logHelper").helper;
 var Mail = require('../../models/mail.js');
+var History = require('../../models/History.js');
 
 module.exports = function(app) {
   // get all books
@@ -60,13 +61,13 @@ module.exports = function(app) {
             res.status(200).send({
               errType: 0
             });
+            Mail.sendEmail(oldBook.ownerIntrID, '[Elevenlibrary]'  + oldBook.name + ' has been deleted by Adminstrator.', '<strong>'  + oldBook.name + '</strong> has been deleted by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'books/all');
             var history = {
               intrID: 'Adminstrator',
               name: oldBook.name,
               content: 'Adminstrator ' + Mail.admin + ' deleted the book ' + oldBook.name + '.'
             };
             History.create(history);
-            Mail.sendEmail(oldBook.ownerIntrID, '[Elevenlibrary]'  + oldBook.name + ' has been deleted by Adminstrator.', '<strong>'  + oldBook.name + '</strong> has been deleted by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'books/all');
           };
         });
       }
@@ -90,13 +91,13 @@ module.exports = function(app) {
         res.json({
           'errType': 0
         });
+        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of ' + mdfBook.name + ' has been changed by Adminstrator.', 'The information of <strong>' + mdfBook.name + '</strong> has been changed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'book/' + _id);
         var history = {
           intrID: 'Adminstrator',
           name: mdfBook.name,
           content: 'Adminstrator ' + Mail.admin + ' modified the book ' + mdfBook.name + '.'
         };
         History.create(history);
-        Mail.sendEmail(mdfBook.ownerIntrID, '[Elevenlibrary]]The information of ' + mdfBook.name + ' has been changed by Adminstrator.', 'The information of <strong>' + mdfBook.name + '</strong> has been changed by <a href="http://faces.tap.ibm.com/bluepages/profile.html?email='+Mail.admin+'"" target="_blank">Adminstrator</a>.', 'book/' + _id);
       }
     });
   });

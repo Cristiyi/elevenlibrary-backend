@@ -15,6 +15,7 @@ var domain = require('domain');
 var log = require('./logHelper');
 var logDB = require('./models/log');
 var mail = require('./models/mail');
+require('./models/schedule');
 
 var app = express();
 log.use(app);

@@ -25,7 +25,7 @@ exports.sendEmail = function(to, subject, text, url) {
     };
     // setup e-mail data with unicode symbols
     var mailOptions = {
-      from: '"Elevenlibrary" <root@oc8301667465.ibm.com>', // sender address
+      from: '"ElevenLibrary" <root@oc8301667465.ibm.com>', // sender address
       to: 'dlzhjj@cn.ibm.com', // list of receivers
       subject: 'Hello ✔', // Subject line
       text: '', // plaintext body
@@ -35,7 +35,7 @@ exports.sendEmail = function(to, subject, text, url) {
     if (to) {
       mailOptions.to = to;
     };
-    mailOptions.subject = subject;
+    mailOptions.subject = '[ElevenLibrary]' + subject;
     var transporter = nodemailer.createTransport(smtpTransport(tranOption));
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {

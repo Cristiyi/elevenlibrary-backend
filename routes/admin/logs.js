@@ -11,7 +11,7 @@ module.exports = function(app) {
       } else {
         res.send(logs);
       };
-    });
+    }).sort({time: -1});
   });
 
   app.delete('/api/admin/log/:_id', filter.adminAuthorize, function(req, res){
