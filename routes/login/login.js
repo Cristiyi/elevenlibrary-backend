@@ -69,7 +69,8 @@ module.exports = function(app) {
                   res.send({
                     errType: 0,
                     name: result.userName,
-                    phoneNum: phoneNum
+                    phoneNum: phoneNum,
+                    agreed: false
                   });
                 });
               } else {
@@ -80,7 +81,8 @@ module.exports = function(app) {
                   res.send({
                     errType: 0,
                     name: result.userName,
-                    phoneNum: phoneNum
+                    phoneNum: phoneNum,
+                    agreed: user.agreed
                   });
                 });
               };
