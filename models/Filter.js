@@ -9,6 +9,8 @@ exports.admin = {
 exports.authorize = function(req, res, next) {
   if (!req.session.user_id) {
     res.status(401).send('User');
+  } else if(!req.session.agreed){
+    res.status(401).send('NotAgreed');
   } else {
     next();
   }

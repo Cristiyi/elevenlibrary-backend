@@ -35,9 +35,9 @@ var expJob = schedule.scheduleJob(expRule, function() {
 
 getPopularBooks();
 // checkExpireBook();
+console.log('[GetPopularBooks] start at ' + Date().toLocaleString());
 
 function getPopularBooks() {
-  console.log('[GetPopularBooks] start at ' + Date().toLocaleString());
   Book.find({
     category: {
       $ne: 'Resource'

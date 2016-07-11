@@ -120,6 +120,7 @@ module.exports = function(app) {
     Book.create(book, function(err, newBook) {
       if (err) {
         console.log('[Add a book]DB insert book err : ' + err);
+        res.send(err);
         throw err;
       } else {
         console.log('[Add a book]DB insert book Success');

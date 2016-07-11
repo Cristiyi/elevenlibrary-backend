@@ -65,6 +65,7 @@ module.exports = function(app) {
                 });
               } else if (!user) {
                 User.create(newUser, function(err, user) {
+                  req.session.agreed = false;
                   res.send({
                     errType: 0,
                     name: result.userName,
@@ -75,6 +76,7 @@ module.exports = function(app) {
                 User.findByIdAndUpdate({
                   _id: user._id
                 }, newUser, function(err, user) {
+                  req.session.agreed = user.agreed;
                   res.send({
                     errType: 0,
                     name: result.userName,
@@ -93,6 +95,23 @@ module.exports = function(app) {
       };
     });
   });
+
+  app.post('/api/agree/user', function(req, res){
+    var intrID = req.body.intrID;
+    User.findOneAndUpdate({
+      'intrID': intrID
+    }, {
+      'agreed': true
+    }, function(err, user){
+      if (err){
+        console.error('[User Agree]', err)
+        res.send(err);
+      } else {
+        req.session.agreed = true;
+        res.send(user);
+      }
+    });
+  })
 
   app.post('/api/logout/admin', function(req, res) {
     req.session.destroy(function(err) {
