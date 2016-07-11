@@ -470,9 +470,10 @@ module.exports = function(app) {
     res.send(Schedule.popularBooks);
   })
 
-  function getExpireTime(now, num) {
-    now.setDate(now.getDate() + num);
-    return now;
+  function getExpireTime(time, num) {
+    var date = new Date(time);
+    date.setDate(date.getDate() + num);
+    return date;
   };
 
   function add0(m) {
