@@ -40,7 +40,7 @@ console.log('[GetPopularBooks] start at ' + Date().toLocaleString());
 function getPopularBooks() {
   Book.find({
     category: {
-      $ne: 'Resource'
+      $ne: 'Mobile Asset'
     },
     confirmed: true,
   }, null, {
