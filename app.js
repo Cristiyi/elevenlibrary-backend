@@ -48,7 +48,7 @@ app.use(session({
   saveUninitialized: true,
   resave: false,
   store: new MongoStore({
-    url: 'mongodb://9.115.24.133/elevenlibrary',
+    url: 'mongodb://9.115.26.136/elevenlibrary',
     ttl: 7 * 24 * 60 * 60,
     autoRemove: 'native',
     touchAfter: 24 * 3600
@@ -56,7 +56,7 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-  var allowedOrigins = ['http://localhost', 'http://9.115.24.133'];
+  var allowedOrigins = ['http://localhost', 'http://9.115.26.136'];
   var origin = req.headers.origin;
   if (allowedOrigins.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
